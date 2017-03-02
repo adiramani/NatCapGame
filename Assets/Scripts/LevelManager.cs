@@ -6,7 +6,6 @@ public class LevelManager : MonoBehaviour {
 
     [SerializeField]
     public GameObject tile1;
-    //public GameObject tile2;
 
 	// Use this for initialization
 	void Start () {
@@ -15,20 +14,10 @@ public class LevelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*if(Input.GetKeyDown(KeyCode.Space))
-        {
-            createLevel(tile2);
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            createLevel(tile1);
 
-        }*/
     }
 
-    private void createLevel(GameObject tile)
-    {
-        
+    private void createLevel (GameObject tile) {
         float tileSize = tile.GetComponent <SpriteRenderer>().sprite.bounds.size.x;
         Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
         for (int y = 0; y < 30; y++)
