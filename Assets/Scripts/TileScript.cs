@@ -8,6 +8,10 @@ public class TileScript : MonoBehaviour {
     public Color[] levelColors;
     // Use this for initialization
     void Start() {
+        Color color = Random.ColorHSV();
+        color.a = 0.2f;
+        GetComponent<SpriteRenderer>().color = color;
+
         tileValues = new int[LEVELS];
         levelColors = new Color[LEVELS];
         for (int i = 0; i < LEVELS; i++) {
@@ -20,6 +24,7 @@ public class TileScript : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        Debug.Log("Click! " + gameObject.name);
         if (tileValues[0] == LEVELS - 1) {
             tileValues[0] = 0;
         }else {
