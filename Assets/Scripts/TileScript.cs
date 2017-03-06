@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileScript : MonoBehaviour {
-    public static int LEVELS = 6;
-    public int[] tileValues;
-    public Color[] levelColors;
+    public Color tileColor;
+    SpriteRenderer spriteRenderer;
+    LevelManager levelManager;
+
     // Use this for initialization
     void Start() {
-        Color color = Random.ColorHSV();
-        color.a = 0.2f;
-        GetComponent<SpriteRenderer>().color = color;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+    }
 
-        tileValues = new int[LEVELS];
-        levelColors = new Color[LEVELS];
-        for (int i = 0; i < LEVELS; i++) {
-            levelColors[i] = new Color(1 - .15F * i, 1 - .15F * i, 1 - .15F * i, 1);
-        }
+    public void setValue(float intensity) {
+        Color colorScheme = levelManager.getColorScheme();
+        tileColor = new Color(colorScheme.r * intensity, colorScheme.g * intensity, colorScheme.b * intensity, levelManager.tileOpacity);
+        spriteRenderer.color = tileColor;
     }
 
     // Update is called once per frame
@@ -25,22 +25,6 @@ public class TileScript : MonoBehaviour {
 
     void OnMouseDown() {
         Debug.Log("Click! " + gameObject.name);
-        if (tileValues[0] == LEVELS - 1) {
-            tileValues[0] = 0;
-        }else {
-            tileValues[0]++;
-        }
-        GetComponent<SpriteRenderer>().color = levelColors[tileValues[0]];
+        spriteRenderer.color = Random.ColorHSV();
     }
-
-    //void OnMouseDown()
-    //{
-    //    GetComponent<SpriteRenderer>().color = Color.black;
-    //}
-
-    //void OnMouseUp()
-    //{
-    //    GetComponent<SpriteRenderer>().color = Color.white;
-
-    //}
 }

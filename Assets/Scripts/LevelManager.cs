@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     public GameObject tilePrototype;
     public int gridResolution = 30;
+    public Color gridColorScheme;
+    public float tileOpacity = 0.2f;
 
     GameObject map;
 
@@ -19,6 +21,10 @@ public class LevelManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+    }
+
+    public Color getColorScheme() {
+        return gridColorScheme;
     }
 
     private void createLevel (GameObject tilePrototype) {
