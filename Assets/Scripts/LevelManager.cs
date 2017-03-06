@@ -7,39 +7,52 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     public GameObject tilePrototype;
     public int gridResolution = 30;
-    public Color gridColorScheme;
+    public int maxTileScore = 50;
+    public Color gridColorScheme = Color.red;
     public float tileOpacity = 0.2f;
+    public int[,] levelData;
 
     GameObject map;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
+        levelData = new int[gridResolution, gridResolution];
         map = GameObject.Find("Map");
-        createLevel(tilePrototype);
+        generateRandomLevel();
+        createGrid(tilePrototype);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 
     }
 
-    public Color getColorScheme() {
-        return gridColorScheme;
+    // For every tile, generate a score of 0, 10, 20, 30, 40, or 50
+    private void generateRandomLevel() {
+        for (int x = 0; x < gridResolution; x++) {
+            for (int y = 0; y < gridResolution; y++) {
+                int score = Random.Range(0, 5) * 10;
+                levelData[x, y] = score;
+            }
+        }
     }
 
-    private void createLevel (GameObject tilePrototype) {
+    private void createGrid(GameObject tilePrototype) {
         float tileSize = map.GetComponent<MapController>().mapSize / gridResolution;
         // origin determined by finding top-left corner of map, then adding half of the tile size so that the tiles are contained
         Vector3 tileOrigin = new Vector3(-0.5f * gridResolution * tileSize + 0.5f * tileSize, 0.5f * gridResolution * tileSize + -0.5f * tileSize);
         Vector3 tileScale = new Vector3(tileSize, tileSize, 1);
 
-        for (int x = 0; x < 30; x++) {
-            for(int y = 0; y < 30; y++) {
+        for (int x = 0; x < gridResolution; x++) {
+            for(int y = 0; y < gridResolution; y++) {
                 GameObject tile = Instantiate(tilePrototype);
                 tile.name = string.Format("Tile ({0}, {1})", x, y);
                 tile.transform.localScale = tileScale;
-                tile.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, 0);
+                tile.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, 0.5f);
                 tile.transform.SetParent(map.transform);
+
+                TileScript tileScript = tile.GetComponent<TileScript>();
+                tileScript.setup(x, y);
 
                 //newTile.transform.position = new Vector3(worldStart.x + (tileSize * x) - tileSize / 2, worldStart.y - (tileSize * y) - tileSize / 2, 0f);
                 //newTile.GetComponent<TileScript>().setup(new Point((int) newTile.transform.position.x, (int) newTile.transform.position.y));
