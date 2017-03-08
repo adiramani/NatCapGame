@@ -12,10 +12,11 @@ public class LevelManager : MonoBehaviour {
     public float tileOpacity = 0.2f;
 
     GameObject map;
-    GameObject[,] tiles = new GameObject[30, 30];
+    GameObject[,] tiles;
 
     // Use this for initialization
     void Start() {
+        tiles = new GameObject[gridResolution, gridResolution];
         map = GameObject.Find("Map");
         createGrid(tilePrototype);
 	}

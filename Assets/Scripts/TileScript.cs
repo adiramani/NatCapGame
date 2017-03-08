@@ -24,12 +24,13 @@ public class TileScript : MonoBehaviour {
         coordinate[1] = y;
     }
 
-    public void setValue(float intensity) {
+    public void setValue(int newScore) {
+        scores[0] = newScore;
         Color colorScheme = levelManager.gridColorScheme;
         tileColor = new Color(
-            colorScheme.r * intensity / levelManager.maxTileScore,
-            colorScheme.g * intensity / levelManager.maxTileScore,
-            colorScheme.b * intensity / levelManager.maxTileScore,
+            colorScheme.r * newScore / levelManager.maxTileScore,
+            colorScheme.g * newScore / levelManager.maxTileScore,
+            colorScheme.b * newScore / levelManager.maxTileScore,
             levelManager.tileOpacity
         );
         spriteRenderer.color = tileColor;
