@@ -10,31 +10,19 @@ public class LevelManager : MonoBehaviour {
     public int maxTileScore = 50;
     public Color gridColorScheme = Color.red;
     public float tileOpacity = 0.2f;
-    public int[,] levelData;
 
     GameObject map;
+    GameObject[,] tiles = new GameObject[30, 30];
 
     // Use this for initialization
     void Start() {
-        levelData = new int[gridResolution, gridResolution];
         map = GameObject.Find("Map");
-        generateRandomLevel();
         createGrid(tilePrototype);
 	}
 	
 	// Update is called once per frame
 	void Update() {
 
-    }
-
-    // For every tile, generate a score of 0, 10, 20, 30, 40, or 50
-    private void generateRandomLevel() {
-        for (int x = 0; x < gridResolution; x++) {
-            for (int y = 0; y < gridResolution; y++) {
-                int score = Random.Range(0, 5) * 10;
-                levelData[x, y] = score;
-            }
-        }
     }
 
     private void createGrid(GameObject tilePrototype) {
@@ -53,6 +41,8 @@ public class LevelManager : MonoBehaviour {
 
                 TileScript tileScript = tile.GetComponent<TileScript>();
                 tileScript.setup(x, y);
+
+                tiles[x, y] = tile;
 
                 //newTile.transform.position = new Vector3(worldStart.x + (tileSize * x) - tileSize / 2, worldStart.y - (tileSize * y) - tileSize / 2, 0f);
                 //newTile.GetComponent<TileScript>().setup(new Point((int) newTile.transform.position.x, (int) newTile.transform.position.y));

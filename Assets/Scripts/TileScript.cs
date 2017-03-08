@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
     int[] coordinate = new int[2];
+    public List<int> scores = new List<int>();
     public Color tileColor;
     SpriteRenderer spriteRenderer;
     LevelManager levelManager;
+    LevelEditor levelEditor;
 
     // Use this for initialization
     void Start() {
+        scores.Add(0);
         spriteRenderer = GetComponent<SpriteRenderer>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        float intensity = levelManager.levelData[coordinate[0], coordinate[1]];
-        setValue(intensity);
+        levelEditor = GameObject.Find("EditorCanvas").GetComponent<LevelEditor>();
+        setValue(scores[0]);
     }
 
     public void setup(int x, int y) {
@@ -38,6 +41,8 @@ public class TileScript : MonoBehaviour {
 
     void OnMouseDown() {
         Debug.Log("Click! " + gameObject.name);
-        spriteRenderer.color = Random.ColorHSV();
+        if(levelEditor.editing) {
+            setValue(levelEditor.currentValue);
+        }
     }
 }
