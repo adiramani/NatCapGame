@@ -4,27 +4,23 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
+    // configurable settings
     [SerializeField]
     public GameObject tilePrototype;
     public int gridResolution = 30;
     public int maxTileScore = 50;
+    // grid color scheme should be different for different map modes
     public Color gridColorScheme = Color.red;
     public float tileOpacity = 0.2f;
 
-    GameObject map;
-    public TileScript[,] tiles;
-
-    // Use this for initialization
+    GameObject map; // map object
+    public TileScript[,] tiles; // 30x30 grid of tiles
+    
     void Start() {
         tiles = new TileScript[gridResolution, gridResolution];
         map = GameObject.Find("Map");
         createGrid(tilePrototype);
 	}
-	
-	// Update is called once per frame
-	void Update() {
-
-    }
 
     private void createGrid(GameObject tilePrototype) {
         float tileSize = map.GetComponent<MapController>().mapSize / gridResolution;

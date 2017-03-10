@@ -6,20 +6,16 @@ using UnityEngine.EventSystems;
 
 public class LevelEditor : MonoBehaviour {
 
+    // This script manages ValueBtns, which are the buttons to switch between painting scores 0-50
+
     public bool editing = true;
+    public ValueBtn defaultButton; // configurable
     List<ValueBtn> valueBtns = new List<ValueBtn>();
     public int currentValue = 0;
-    public ValueBtn defaultButton;
-
-    // Use this for initialization
+    
     void Start() {
         defaultButton.select();
     }
-	
-	// Update is called once per frame
-	void Update() {
-		
-	}
 
     public void setBtnValue(int newValue) {
         currentValue = newValue;

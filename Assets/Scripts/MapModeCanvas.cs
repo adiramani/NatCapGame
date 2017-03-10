@@ -14,15 +14,9 @@ public class MapModeCanvas : MonoBehaviour {
     List<MapModeBtn> mapModeBtns = new List<MapModeBtn>();
     public MapMode currentMode = MapModeCanvas.MapMode.PortExpansion;
     LevelManager levelManager;
-
-    // Use this for initialization
+    
     void Start() {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 
     public void setMapMode(MapMode newMode) {
@@ -37,7 +31,8 @@ public class MapModeCanvas : MonoBehaviour {
         /*
         foreach (MapModeBtn mapModeBtn in mapModeBtns) {
             mapModeBtn.deselect();
-        }*/
+        }
+        */
     }
 
     public void registerButton(MapModeBtn mapModeBtn) {

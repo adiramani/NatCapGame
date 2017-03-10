@@ -5,17 +5,18 @@ using UnityEngine;
 public class TileScript : MonoBehaviour {
 
     int[] coordinate = new int[2];
+    // tile scores and the color cache are stored as dictionaries where the indexes are MapMaps
     public Dictionary<MapModeCanvas.MapMode, int> scores = new Dictionary<MapModeCanvas.MapMode, int>();
+    // color cache exists because it is really slow to recalculate color values when switching mapmode
     public Dictionary<MapModeCanvas.MapMode, Color> colorCache = new Dictionary<MapModeCanvas.MapMode, Color>();
-    public Color tileColor;
     SpriteRenderer spriteRenderer;
 
     LevelManager levelManager;
     LevelEditor levelEditor;
     MapModeCanvas mapModeCanvas;
-
-    // Use this for initialization
+    
     void Start() {
+        // set all scores to zero initially
         scores[MapModeCanvas.MapMode.PortExpansion] = 0;
         scores[MapModeCanvas.MapMode.MineralExtraction] = 0;
         scores[MapModeCanvas.MapMode.FoodSecurity] = 0;
@@ -53,16 +54,15 @@ public class TileScript : MonoBehaviour {
     }
 
     public void changeColor(Color newColor) {
-        tileColor = newColor;
-        spriteRenderer.color = tileColor;
+        spriteRenderer.color = newColor;
     }
-
-    // Update is called once per frame
-    void Update() {
-    }
-
+    
     void OnMouseDown() {
         Debug.Log("Click! " + gameObject.name);
+        /* When a tile is clicked during editing:
+         * 1) current score updated for current map mode
+         * 2) new color is calculated, cached, and set
+         */
         if(levelEditor.editing) {
             scores[mapModeCanvas.currentMode] = levelEditor.currentValue;
             Color newColor = calculateColor(scores[mapModeCanvas.currentMode], levelManager.gridColorScheme);

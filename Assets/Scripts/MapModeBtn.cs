@@ -5,22 +5,17 @@ using UnityEngine.UI;
 
 public class MapModeBtn : MonoBehaviour {
 
+    // set default map mode
     public MapModeCanvas.MapMode mapMode = MapModeCanvas.MapMode.PortExpansion;
     MapModeCanvas mapModeCanvas;
     Button button;
     ColorBlock colorBlock;
-
-    // Use this for initialization
+    
     void Start() {
         mapModeCanvas = GameObject.Find("MapModeCanvas").GetComponent<MapModeCanvas>();
         button = gameObject.GetComponent<Button>();
         colorBlock = button.colors;
         button.onClick.AddListener(OnClick);
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 
     void OnClick() {
