@@ -12,11 +12,11 @@ public class LevelManager : MonoBehaviour {
     public float tileOpacity = 0.2f;
 
     GameObject map;
-    GameObject[,] tiles;
+    public TileScript[,] tiles;
 
     // Use this for initialization
     void Start() {
-        tiles = new GameObject[gridResolution, gridResolution];
+        tiles = new TileScript[gridResolution, gridResolution];
         map = GameObject.Find("Map");
         createGrid(tilePrototype);
 	}
@@ -43,10 +43,7 @@ public class LevelManager : MonoBehaviour {
                 TileScript tileScript = tile.GetComponent<TileScript>();
                 tileScript.setup(x, y);
 
-                tiles[x, y] = tile;
-
-                //newTile.transform.position = new Vector3(worldStart.x + (tileSize * x) - tileSize / 2, worldStart.y - (tileSize * y) - tileSize / 2, 0f);
-                //newTile.GetComponent<TileScript>().setup(new Point((int) newTile.transform.position.x, (int) newTile.transform.position.y));
+                tiles[x, y] = tileScript;
             }
         }
     }

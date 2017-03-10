@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ValueBtn : MonoBehaviour {
-    
-    public int value = 0;
-    LevelEditor levelEditor;
+public class MapModeBtn : MonoBehaviour {
+
+    public MapModeCanvas.MapMode mapMode = MapModeCanvas.MapMode.PortExpansion;
+    MapModeCanvas mapModeCanvas;
     Button button;
     ColorBlock colorBlock;
 
-	// Use this for initialization
-	void Start() {
-        levelEditor = GameObject.Find("EditorCanvas").GetComponent<LevelEditor>();
-        levelEditor.registerButton(this);
+    // Use this for initialization
+    void Start() {
+        mapModeCanvas = GameObject.Find("MapModeCanvas").GetComponent<MapModeCanvas>();
         button = gameObject.GetComponent<Button>();
         colorBlock = button.colors;
         button.onClick.AddListener(OnClick);
-	}
-	
-	// Update is called once per frame
-	void Update() {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     void OnClick() {
-        levelEditor.setBtnValue(value);
+        mapModeCanvas.setMapMode(mapMode);
         select();
     }
 

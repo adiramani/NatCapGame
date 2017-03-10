@@ -9,10 +9,11 @@ public class LevelEditor : MonoBehaviour {
     public bool editing = true;
     List<ValueBtn> valueBtns = new List<ValueBtn>();
     public int currentValue = 0;
+    public ValueBtn defaultButton;
 
-	// Use this for initialization
-	void Start() {
-
+    // Use this for initialization
+    void Start() {
+        defaultButton.select();
     }
 	
 	// Update is called once per frame
@@ -21,7 +22,6 @@ public class LevelEditor : MonoBehaviour {
 	}
 
     public void setBtnValue(int newValue) {
-        Debug.Log("New value: " + newValue);
         currentValue = newValue;
 
         foreach (ValueBtn valueBtn in valueBtns) {
