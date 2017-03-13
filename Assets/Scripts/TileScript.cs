@@ -37,20 +37,27 @@ public class TileScript : MonoBehaviour {
     }
 
     void calculateAllColors() {
-        Color colorScheme = levelManager.gridColorScheme;
-        colorCache[MapModeCanvas.MapMode.PortExpansion] = calculateColor(0, colorScheme);
-        colorCache[MapModeCanvas.MapMode.MineralExtraction] = calculateColor(0, colorScheme);
-        colorCache[MapModeCanvas.MapMode.FoodSecurity] = calculateColor(0, colorScheme);
-        colorCache[MapModeCanvas.MapMode.TourismPotential] = calculateColor(0, colorScheme);
+        colorCache[MapModeCanvas.MapMode.PortExpansion] = calculateColor(scores[MapModeCanvas.MapMode.PortExpansion], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.PortExpansion]);
+        colorCache[MapModeCanvas.MapMode.MineralExtraction] = calculateColor(scores[MapModeCanvas.MapMode.MineralExtraction], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.MineralExtraction]);
+        colorCache[MapModeCanvas.MapMode.FoodSecurity] = calculateColor(scores[MapModeCanvas.MapMode.FoodSecurity], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.FoodSecurity]);
+        colorCache[MapModeCanvas.MapMode.TourismPotential] = calculateColor(scores[MapModeCanvas.MapMode.TourismPotential], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.TourismPotential]);
     }
 
     public Color calculateColor(int score, Color colorScheme) {
+        return new Color(
+            colorScheme.r,
+            colorScheme.g,
+            colorScheme.b,
+            score > 0 ? 0.25f + 0.5f * (score / levelManager.maxTileScore) : 0
+        );
+        /*
         return new Color(
             colorScheme.r * score / levelManager.maxTileScore,
             colorScheme.g * score / levelManager.maxTileScore,
             colorScheme.b * score / levelManager.maxTileScore,
             levelManager.tileOpacity
         );
+        */
     }
 
     public void changeColor(Color newColor) {
@@ -65,7 +72,9 @@ public class TileScript : MonoBehaviour {
          */
         if(levelEditor.editing) {
             scores[mapModeCanvas.currentMode] = levelEditor.currentValue;
-            Color newColor = calculateColor(scores[mapModeCanvas.currentMode], levelManager.gridColorScheme);
+            Debug.Log(mapModeCanvas.currentMode);
+            Debug.Log(mapModeCanvas.gridColorSchemes[mapModeCanvas.currentMode]);
+            Color newColor = calculateColor(scores[mapModeCanvas.currentMode], mapModeCanvas.gridColorSchemes[mapModeCanvas.currentMode]);
             colorCache[mapModeCanvas.currentMode] = newColor;
             changeColor(newColor);
         }

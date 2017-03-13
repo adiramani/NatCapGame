@@ -11,12 +11,20 @@ public class MapModeCanvas : MonoBehaviour {
         TourismPotential = 3
     }
 
+    public Dictionary<MapModeCanvas.MapMode, Color> gridColorSchemes;
     List<MapModeBtn> mapModeBtns = new List<MapModeBtn>();
     public MapMode currentMode = MapModeCanvas.MapMode.PortExpansion;
     LevelManager levelManager;
     
     void Start() {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+
+        gridColorSchemes = new Dictionary<MapModeCanvas.MapMode, Color>() {
+            { MapMode.PortExpansion, new Color(10f / 255f, 10f / 255f, 10f / 255f) },
+            { MapMode.MineralExtraction, new Color(255f / 255f, 178f / 255f, 0) },
+            { MapMode.FoodSecurity, new Color(255f / 255f, 20f / 255f, 20f / 255f) },
+            { MapMode.TourismPotential, new Color(0, 175 / 255f, 11f / 255f) }
+        };
     }
 
     public void setMapMode(MapMode newMode) {

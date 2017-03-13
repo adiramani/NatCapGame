@@ -9,8 +9,6 @@ public class LevelManager : MonoBehaviour {
     public GameObject tilePrototype;
     public int gridResolution = 30;
     public int maxTileScore = 50;
-    // grid color scheme should be different for different map modes
-    public Color gridColorScheme = Color.red;
     public float tileOpacity = 0.2f;
 
     GameObject map; // map object
