@@ -7,7 +7,7 @@ public class TileScript : MonoBehaviour {
     int[] coordinate = new int[2];
     // tile scores and the color cache are stored as dictionaries where the indexes are MapMaps
     public Dictionary<MapModeCanvas.MapMode, int> scores = new Dictionary<MapModeCanvas.MapMode, int>();
-    // color cache exists because it is really slow to recalculate color values when switching mapmode
+    // color cache exists because it is really slow to recalculate color values when switching mapmode=
     public Dictionary<MapModeCanvas.MapMode, Color> colorCache = new Dictionary<MapModeCanvas.MapMode, Color>();
     SpriteRenderer spriteRenderer;
 
