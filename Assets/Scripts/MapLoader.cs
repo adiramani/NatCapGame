@@ -46,7 +46,7 @@ public class MapLoader : MonoBehaviour {
 
     void Update() {
         if(Input.GetKeyDown("space")) {
-            //exportMap();
+            exportMap();
         }
         if(firstTick) {
             firstTick = false;
