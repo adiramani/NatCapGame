@@ -17,10 +17,7 @@ public class TileScript : MonoBehaviour {
     
     void Start() {
         // set all scores to zero initially
-        scores[MapModeCanvas.MapMode.PortExpansion] = 0;
-        scores[MapModeCanvas.MapMode.MineralExtraction] = 0;
-        scores[MapModeCanvas.MapMode.FoodSecurity] = 0;
-        scores[MapModeCanvas.MapMode.TourismPotential] = 0;
+        setValues(0, 0, 0, 0);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -34,6 +31,13 @@ public class TileScript : MonoBehaviour {
     public void setup(int x, int y) {
         coordinate[0] = x;
         coordinate[1] = y;
+    }
+
+    public void setValues(int portExpansion, int mineralExtraction, int foodSecurity, int tourismPotential) {
+        scores[MapModeCanvas.MapMode.PortExpansion] = portExpansion;
+        scores[MapModeCanvas.MapMode.MineralExtraction] = mineralExtraction;
+        scores[MapModeCanvas.MapMode.FoodSecurity] = foodSecurity;
+        scores[MapModeCanvas.MapMode.TourismPotential] = tourismPotential;
     }
 
     public void calculateAllColors() {
