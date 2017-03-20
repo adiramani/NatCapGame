@@ -6,11 +6,11 @@ public class CameraController : MonoBehaviour {
 
     public float pinchSensitivity = 0.001f;
     public float mouseZoomSensitivity = 5.0f;
-    public float fingerMoveSensitivity = 0.1f;
+    public float fingerMoveSensitivity = 0.04f;
     public float mouseMoveSensitivity = 0.8f;
 
     public float zoomRatio = 1.7f / 30f;
-    public float minZoom = 1.0f;
+    public float minZoom = 5.0f;
     public float maxZoom = 20.0f;
 
     float currentZoom;
