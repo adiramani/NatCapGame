@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public float pinchSensitivity = 5.0f;
+    public float pinchSensitivity = 0.001f;
     public float mouseZoomSensitivity = 5.0f;
-    public float fingerMoveSensitivity = 0.8f;
+    public float fingerMoveSensitivity = 0.1f;
     public float mouseMoveSensitivity = 0.8f;
 
     public float zoomRatio = 1.7f / 30f;
