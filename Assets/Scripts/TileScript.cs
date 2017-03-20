@@ -48,20 +48,13 @@ public class TileScript : MonoBehaviour {
     }
 
     public Color calculateColor(int score, Color colorScheme) {
+        float opacity = score > 0 ? 0.25f + 0.5f * ((float) score / (float) levelManager.maxTileScore) : 0;
         return new Color(
             colorScheme.r,
             colorScheme.g,
             colorScheme.b,
-            score > 0 ? 0.25f + 0.5f * (score / levelManager.maxTileScore) : 0
+            opacity
         );
-        /*
-        return new Color(
-            colorScheme.r * score / levelManager.maxTileScore,
-            colorScheme.g * score / levelManager.maxTileScore,
-            colorScheme.b * score / levelManager.maxTileScore,
-            levelManager.tileOpacity
-        );
-        */
     }
 
     public void changeColor(Color newColor) {
