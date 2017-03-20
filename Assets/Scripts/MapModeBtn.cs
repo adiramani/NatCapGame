@@ -9,31 +9,36 @@ public class MapModeBtn : MonoBehaviour {
     public MapModeCanvas.MapMode mapMode = MapModeCanvas.MapMode.PortExpansion;
     MapModeCanvas mapModeCanvas;
     Button button;
-    ColorBlock colorBlock;
+    ColorBlock defaultColorBlock;
+    ColorBlock selectedColorBlock;
     
     void Start() {
         mapModeCanvas = GameObject.Find("MapModeCanvas").GetComponent<MapModeCanvas>();
         button = gameObject.GetComponent<Button>();
-        colorBlock = button.colors;
+
+        defaultColorBlock = button.colors;
+        selectedColorBlock = button.colors;
+        selectedColorBlock.normalColor = new Color(0, 1f, 0.96f);
+        selectedColorBlock.highlightedColor = new Color(0, 1f, 0.96f);
+        selectedColorBlock.pressedColor = new Color(0, 1f, 0.96f);
+
         button.onClick.AddListener(OnClick);
+        mapModeCanvas.registerButton(this);
+
+        if(mapMode == MapModeCanvas.MapMode.PortExpansion) {
+            select();
+        }
     }
 
     void OnClick() {
         mapModeCanvas.setMapMode(mapMode);
-        select();
     }
 
     public void select() {
-        /*
-        colorBlock.normalColor = new Color(0, 255, 246);
-        button.colors = colorBlock;
-        */
+        button.colors = selectedColorBlock;
     }
 
     public void deselect() {
-        /*
-        colorBlock.normalColor = Color.white;
-        button.colors = colorBlock;
-        */
+        button.colors = defaultColorBlock;
     }
 }

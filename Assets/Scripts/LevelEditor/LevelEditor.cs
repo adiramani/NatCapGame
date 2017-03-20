@@ -23,6 +23,15 @@ public class LevelEditor : MonoBehaviour {
         foreach (ValueBtn valueBtn in valueBtns) {
             valueBtn.deselect();
         }
+
+        foreach (ValueBtn valueBtn in valueBtns) {
+            if (valueBtn.value == newValue) {
+                valueBtn.select();
+            }
+            else {
+                valueBtn.deselect();
+            }
+        }
     }
 
     public void registerButton(ValueBtn valueBtn) {

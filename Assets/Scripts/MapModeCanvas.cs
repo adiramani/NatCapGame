@@ -36,11 +36,15 @@ public class MapModeCanvas : MonoBehaviour {
                 tile.changeColor(tile.colorCache[currentMode]);
             }
         }
-        /*
+        
         foreach (MapModeBtn mapModeBtn in mapModeBtns) {
-            mapModeBtn.deselect();
+            if(mapModeBtn.mapMode == newMode) {
+                mapModeBtn.select();
+            }
+            else {
+                mapModeBtn.deselect();
+            }
         }
-        */
     }
 
     public void registerButton(MapModeBtn mapModeBtn) {
