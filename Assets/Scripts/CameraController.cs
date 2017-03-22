@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour {
     public float minZoom = 5.0f;
     public float maxZoom = 20.0f;
 
+    public float maxMove = 15.0f;
+
     float currentZoom;
 
     Camera camera;
@@ -35,7 +37,11 @@ public class CameraController : MonoBehaviour {
             float horizontalMovement = Input.GetAxis("Mouse X") * mouseMoveSensitivity * zoomRatio * currentZoom;
             float verticalMovement = Input.GetAxis("Mouse Y") * mouseMoveSensitivity * zoomRatio * currentZoom;
             if(horizontalMovement != 0 && verticalMovement != 0) {
-                camera.transform.Translate(-1 * horizontalMovement, -1 * verticalMovement, 0);
+                camera.transform.position = new Vector3(
+                    Mathf.Clamp(camera.transform.position.x - horizontalMovement, -1 * maxMove, 1 * maxMove),
+                    Mathf.Clamp(camera.transform.position.y - verticalMovement, -1 * maxMove, 1 * maxMove),
+                    camera.transform.position.z
+                );
             }
         }
 
