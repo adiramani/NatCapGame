@@ -23,7 +23,7 @@ public class MapModeCanvas : MonoBehaviour {
             { MapMode.PortExpansion, new Color(10f / 255f, 10f / 255f, 10f / 255f) },
             { MapMode.MineralExtraction, new Color(255f / 255f, 178f / 255f, 0) },
             { MapMode.FoodSecurity, new Color(255f / 255f, 20f / 255f, 20f / 255f) },
-            { MapMode.TourismPotential, new Color(0, 175 / 255f, 11f / 255f) }
+            { MapMode.TourismPotential, new Color(0, 255f / 255f, 0) }
         };
     }
 
@@ -36,11 +36,15 @@ public class MapModeCanvas : MonoBehaviour {
                 tile.changeColor(tile.colorCache[currentMode]);
             }
         }
-        /*
+        
         foreach (MapModeBtn mapModeBtn in mapModeBtns) {
-            mapModeBtn.deselect();
+            if(mapModeBtn.mapMode == newMode) {
+                mapModeBtn.select();
+            }
+            else {
+                mapModeBtn.deselect();
+            }
         }
-        */
     }
 
     public void registerButton(MapModeBtn mapModeBtn) {

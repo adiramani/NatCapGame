@@ -7,7 +7,7 @@ public class TileScript : MonoBehaviour {
     int[] coordinate = new int[2];
     // tile scores and the color cache are stored as dictionaries where the indexes are MapMaps
     public Dictionary<MapModeCanvas.MapMode, int> scores = new Dictionary<MapModeCanvas.MapMode, int>();
-    // color cache exists because it is really slow to recalculate color values when switching mapmode
+    // color cache exists because it is really slow to recalculate color values when switching mapmode=
     public Dictionary<MapModeCanvas.MapMode, Color> colorCache = new Dictionary<MapModeCanvas.MapMode, Color>();
     SpriteRenderer spriteRenderer;
 
@@ -17,10 +17,7 @@ public class TileScript : MonoBehaviour {
     
     void Start() {
         // set all scores to zero initially
-        scores[MapModeCanvas.MapMode.PortExpansion] = 0;
-        scores[MapModeCanvas.MapMode.MineralExtraction] = 0;
-        scores[MapModeCanvas.MapMode.FoodSecurity] = 0;
-        scores[MapModeCanvas.MapMode.TourismPotential] = 0;
+        setValues(0, 0, 0, 0);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -36,7 +33,14 @@ public class TileScript : MonoBehaviour {
         coordinate[1] = y;
     }
 
-    void calculateAllColors() {
+    public void setValues(int portExpansion, int mineralExtraction, int foodSecurity, int tourismPotential) {
+        scores[MapModeCanvas.MapMode.PortExpansion] = portExpansion;
+        scores[MapModeCanvas.MapMode.MineralExtraction] = mineralExtraction;
+        scores[MapModeCanvas.MapMode.FoodSecurity] = foodSecurity;
+        scores[MapModeCanvas.MapMode.TourismPotential] = tourismPotential;
+    }
+
+    public void calculateAllColors() {
         colorCache[MapModeCanvas.MapMode.PortExpansion] = calculateColor(scores[MapModeCanvas.MapMode.PortExpansion], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.PortExpansion]);
         colorCache[MapModeCanvas.MapMode.MineralExtraction] = calculateColor(scores[MapModeCanvas.MapMode.MineralExtraction], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.MineralExtraction]);
         colorCache[MapModeCanvas.MapMode.FoodSecurity] = calculateColor(scores[MapModeCanvas.MapMode.FoodSecurity], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.FoodSecurity]);
@@ -44,20 +48,13 @@ public class TileScript : MonoBehaviour {
     }
 
     public Color calculateColor(int score, Color colorScheme) {
+        float opacity = score > 0 ? 0.25f + 0.5f * ((float) score / (float) levelManager.maxTileScore) : 0;
         return new Color(
             colorScheme.r,
             colorScheme.g,
             colorScheme.b,
-            score > 0 ? 0.25f + 0.5f * (score / levelManager.maxTileScore) : 0
+            opacity
         );
-        /*
-        return new Color(
-            colorScheme.r * score / levelManager.maxTileScore,
-            colorScheme.g * score / levelManager.maxTileScore,
-            colorScheme.b * score / levelManager.maxTileScore,
-            levelManager.tileOpacity
-        );
-        */
     }
 
     public void changeColor(Color newColor) {
