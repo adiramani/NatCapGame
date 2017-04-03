@@ -48,15 +48,21 @@ public class TileScript : MonoBehaviour {
         colorCache[MapModeCanvas.MapMode.TourismPotential] = calculateColor(scores[MapModeCanvas.MapMode.TourismPotential], mapModeCanvas.gridColorSchemes[MapModeCanvas.MapMode.TourismPotential]);
     }
 
-    public Color calculateColor(int score, Color colorScheme) {
-        float opacity = score > 0 ? 0.25f + 0.5f * ((float) score / (float) levelManager.maxTileScore) : 0;
-        return new Color(
-            colorScheme.r,
-            colorScheme.g,
-            colorScheme.b,
-            opacity
-        );
+    public Color calculateColor(int score, Color[] colorScheme) {
+        if(score == 0) {
+            return new Color(0, 0, 0, 0);
+        }
+        Color color = colorScheme[(score / 10) - 1];
+        return new Color(color.r, color.g, color.b, 0.85f);
     }
+
+    /*
+     * 50: 171, 95, 125
+     * 40: 210, 113, 127
+     * 30: 239, 161, 154
+     * 20: 247, 204, 183
+     * 10: 252, 238, 220
+     */
 
     public void changeColor(Color newColor) {
         spriteRenderer.color = newColor;
