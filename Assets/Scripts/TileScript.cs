@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour {
 
@@ -67,7 +68,7 @@ public class TileScript : MonoBehaviour {
          * 1) current score updated for current map mode
          * 2) new color is calculated, cached, and set
          */
-        if(levelEditor.editing) {
+        if(levelEditor.editing && !EventSystem.current.IsPointerOverGameObject()) {
             scores[mapModeCanvas.currentMode] = levelEditor.currentValue;
             Debug.Log(mapModeCanvas.currentMode);
             Debug.Log(mapModeCanvas.gridColorSchemes[mapModeCanvas.currentMode]);
