@@ -48,8 +48,8 @@ public class PiecePlace : MonoBehaviour {
         else gameObject = Instantiate(MineGameObject);
 
         float tileSize = levelManager.getTileSize();
-        Vector3 tileOrigin = new Vector3(-0.5f * levelManager.gridResolution * tileSize + tileSize, 0.5f * levelManager.gridResolution * tileSize - tileSize, 0);
-        gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -0.5f);
+        Vector3 tileOrigin = map.transform.position + new Vector3(-0.5f * levelManager.gridResolution * tileSize + tileSize, 0.5f * levelManager.gridResolution * tileSize - tileSize, 0);
+        gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -1.5f);
         gameObject.transform.SetParent(map.transform);
 
         GamePieceScript pieceScript = gameObject.GetComponent<GamePieceScript>();

@@ -7,6 +7,7 @@ public class GamePieceScript : MonoBehaviour {
     public int x;
     public int y;
 
+    GameObject map;
     CameraController cameraController;
     LevelManager levelManager = null;
     PiecePlace piecePlace;
@@ -15,6 +16,7 @@ public class GamePieceScript : MonoBehaviour {
     float doubleTapCooldown = 0; // seconds
 
     void Start() {
+        map = GameObject.Find("Map").gameObject;
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         piecePlace = GameObject.Find("LevelManager").GetComponent<PiecePlace>();
     }
@@ -91,23 +93,33 @@ public class GamePieceScript : MonoBehaviour {
 
         // do the opposite transforms as in PiecePlace to get new x, y coord
         float tileSize = levelManager.getTileSize();
-        Vector3 tileOrigin = new Vector3(-0.5f * levelManager.gridResolution * tileSize + tileSize, 0.5f * levelManager.gridResolution * tileSize - tileSize, 0);
+        Vector3 tileOrigin = map.transform.position + new Vector3(-0.5f * levelManager.gridResolution * tileSize + tileSize, 0.5f * levelManager.gridResolution * tileSize - tileSize, 0);
         position = position - tileOrigin;
         position = Vector3.Scale(position, new Vector3(1 / tileSize, -1 / tileSize, 0));
 
         int newX = Mathf.RoundToInt(position.x);
         int newY = Mathf.RoundToInt(position.y);
 
-        int i = 0;
+        bool decrease = true;
         while(!piecePlace.canPlace(newX, newY)) {
-            newX -= 1;
-            newY -= 1;
+            if(decrease) {
+                newX = Mathf.Max(0, newX - 1);
+                newY = Mathf.Max(0, newY - 1);
+
+                if (newX == 0 && newY == 0) {
+                    decrease = false;
+                }
+            }
+            else {
+                newX++;
+                newY++;
+            }
         }
 
         x = newX;
         y = newY;
 
-        gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -0.5f);
+        gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -1.5f);
         piecePlace.calculator.recalculate();
     }
 }
