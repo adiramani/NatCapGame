@@ -15,6 +15,8 @@ public class TileScript : MonoBehaviour {
     LevelEditor levelEditor;
     MapModeCanvas mapModeCanvas;
     PiecePlace piecePlace;
+
+    bool hoveringOverTile = false;
     
     void Start() {
         // set all scores to zero initially
@@ -80,10 +82,22 @@ public class TileScript : MonoBehaviour {
             colorCache[mapModeCanvas.currentMode] = newColor;
             changeColor(newColor);
         }
-        if(!levelEditor.editing && !CameraController.IsPointerOverUIObject()) {
-            piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
+        if(!levelEditor.editing && !CameraController.IsPointerOverUIObject() && Input.touchCount < 2) {
+            hoveringOverTile = true;
         }
     }
 
-    
+    // Differentiating between tap and drag
+    // It's a tap if click begins and ends on the tile without exiting
+
+    void OnMouseExit() {
+        hoveringOverTile = false;
+    }
+
+    void OnMouseUp() {
+        if(hoveringOverTile) {
+            piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
+            hoveringOverTile = false;
+        }
+    }
 }
