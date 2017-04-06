@@ -88,10 +88,8 @@ public class TileScript : MonoBehaviour {
             colorCache[mapModeCanvas.currentMode] = newColor;
             changeColor(newColor);
         }
-        Debug.Log("levelEditor.editing: " + levelEditor.editing + "\n IsPointerOverUIObject: " + CameraController.IsPointerOverUIObject() + "\nTouchCount: " + Input.touchCount);
         if(!levelEditor.editing && !CameraController.IsPointerOverUIObject() && Input.touchCount < 2) {
             // if tapping for first time:
-            Debug.Log(doubleTapCooldown);
             if(doubleTapCooldown <= 0) {
                 hoveringOverTile = true;
                 doubleTapCooldown = 0.8f;

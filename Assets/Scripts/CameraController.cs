@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour {
 
+    public bool frozen = false; // frozen if dragging game piece
+
     public float pinchSensitivity = 0.001f;
     public float mouseZoomSensitivity = 5.0f;
     public float fingerMoveSensitivity = 0.04f;
@@ -26,6 +28,9 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	void Update () {
+        if(frozen)
+            return;
+
         // Scroll wheel for zooming in/out
         float zoom = Input.GetAxis("Mouse ScrollWheel") * mouseZoomSensitivity;
         if(zoom != 0 && camera.orthographicSize - zoom > minZoom && camera.orthographicSize - zoom < maxZoom) {

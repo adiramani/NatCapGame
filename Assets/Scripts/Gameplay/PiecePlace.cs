@@ -28,8 +28,8 @@ public class PiecePlace : MonoBehaviour {
         calculator = GameObject.Find("CalculatorCanvas").GetComponent<Calculator>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
-        piecesRemaining[PieceType.Port] = 8;
-        piecesRemaining[PieceType.Mine] = 8;
+        piecesRemaining[PieceType.Port] = 4;
+        piecesRemaining[PieceType.Mine] = 4;
         piecesRemaining[PieceType.Shipping] = 4;
 
         map = GameObject.Find("Map");
@@ -47,7 +47,7 @@ public class PiecePlace : MonoBehaviour {
         else if(pieceType == PieceType.Port) gameObject = Instantiate(PortGameObject);
         else gameObject = Instantiate(MineGameObject);
 
-        float tileSize = map.GetComponent<MapController>().mapSize / levelManager.gridResolution;
+        float tileSize = levelManager.getTileSize();
         Vector3 tileOrigin = new Vector3(-0.5f * levelManager.gridResolution * tileSize + tileSize, 0.5f * levelManager.gridResolution * tileSize - tileSize, 0);
         gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -0.5f);
         gameObject.transform.SetParent(map.transform);
