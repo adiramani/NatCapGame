@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour {
 
@@ -72,8 +71,8 @@ public class TileScript : MonoBehaviour {
          * 1) current score updated for current map mode
          * 2) new color is calculated, cached, and set
          */
-        // !EventSystem.current.IsPointerOverGameObject()
-        if(levelEditor.editing) {
+        // 
+        if(levelEditor.editing && !CameraController.IsPointerOverUIObject()) {
             scores[mapModeCanvas.currentMode] = levelEditor.currentValue;
             Debug.Log(mapModeCanvas.currentMode);
             Debug.Log(mapModeCanvas.gridColorSchemes[mapModeCanvas.currentMode]);
@@ -81,8 +80,10 @@ public class TileScript : MonoBehaviour {
             colorCache[mapModeCanvas.currentMode] = newColor;
             changeColor(newColor);
         }
-        else {
+        if(!levelEditor.editing && !CameraController.IsPointerOverUIObject()) {
             piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
         }
     }
+
+    
 }

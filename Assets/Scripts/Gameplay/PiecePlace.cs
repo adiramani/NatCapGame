@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PiecePlace : MonoBehaviour {
 
+    Calculator calculator;
     LevelManager levelManager;
     public Dictionary<PieceType, int> piecesRemaining = new Dictionary<PieceType, int>(); // counter of how many pieces can be placed
-    List<GamePieceScript> pieces = new List<GamePieceScript>(); // pieces that have been placed
+    public List<GamePieceScript> pieces = new List<GamePieceScript>(); // pieces that have been placed
     GameObject map;
     public PieceType currentPieceType = PieceType.Port;
 
@@ -24,6 +25,7 @@ public class PiecePlace : MonoBehaviour {
     }
 
     void Start () {
+        calculator = GameObject.Find("CalculatorCanvas").GetComponent<Calculator>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
         piecesRemaining[PieceType.Port] = 8;
@@ -54,6 +56,8 @@ public class PiecePlace : MonoBehaviour {
         pieceScript.setup(x, y);
 
         pieces.Add(pieceScript);
+
+        calculator.recalculate();
     }
 
     public bool canPlace(int x, int y) {
