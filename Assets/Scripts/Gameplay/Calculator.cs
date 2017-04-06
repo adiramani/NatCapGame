@@ -7,7 +7,7 @@ public class Calculator : MonoBehaviour {
     
     PiecePlace piecePlace;
     RoundController roundController;
-    int score = 0;
+    public int score = 0;
     Text scoreTextA;
     Text scoreTextB;
     Image scorePanelB;
