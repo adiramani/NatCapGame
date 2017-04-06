@@ -93,5 +93,6 @@ public class GamePieceScript : MonoBehaviour {
         y = newY;
 
         gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -0.5f);
+        piecePlace.calculator.recalculate();
     }
 }

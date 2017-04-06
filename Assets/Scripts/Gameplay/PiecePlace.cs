@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PiecePlace : MonoBehaviour {
 
-    Calculator calculator;
+    public Calculator calculator;
     LevelManager levelManager;
     public Dictionary<PieceType, int> piecesRemaining = new Dictionary<PieceType, int>(); // counter of how many pieces can be placed
     public List<GamePieceScript> pieces = new List<GamePieceScript>(); // pieces that have been placed
