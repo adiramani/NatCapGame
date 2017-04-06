@@ -15,6 +15,7 @@ public class TileScript : MonoBehaviour {
     LevelManager levelManager;
     LevelEditor levelEditor;
     MapModeCanvas mapModeCanvas;
+    PiecePlace piecePlace;
     
     void Start() {
         // set all scores to zero initially
@@ -24,6 +25,7 @@ public class TileScript : MonoBehaviour {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         levelEditor = GameObject.Find("EditorCanvas").GetComponent<LevelEditor>();
         mapModeCanvas = GameObject.Find("MapModeCanvas").GetComponent<MapModeCanvas>();
+        piecePlace = GameObject.Find("LevelManager").GetComponent<PiecePlace>();
 
         calculateAllColors();
         changeColor(colorCache[mapModeCanvas.currentMode]);
@@ -32,6 +34,10 @@ public class TileScript : MonoBehaviour {
     public void setup(int x, int y) {
         coordinate[0] = x;
         coordinate[1] = y;
+    }
+
+    public int getScore(MapModeCanvas.MapMode mapMode) {
+        return scores[mapMode];
     }
 
     public void setValues(int portExpansion, int mineralExtraction, int foodSecurity, int tourismPotential) {
@@ -74,6 +80,9 @@ public class TileScript : MonoBehaviour {
             Color newColor = calculateColor(scores[mapModeCanvas.currentMode], mapModeCanvas.currentMode);
             colorCache[mapModeCanvas.currentMode] = newColor;
             changeColor(newColor);
+        }
+        else {
+            piecePlace.placePiece(PiecePlace.PieceType.Mine, coordinate[0], coordinate[1]);
         }
     }
 }

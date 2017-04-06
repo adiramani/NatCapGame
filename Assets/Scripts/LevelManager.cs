@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
     private void createGrid(GameObject tilePrototype) {
         float tileSize = map.GetComponent<MapController>().mapSize / gridResolution;
         // origin determined by finding top-left corner of map, then adding half of the tile size so that the tiles are contained
-        Vector3 tileOrigin = new Vector3(-0.5f * gridResolution * tileSize + 0.5f * tileSize, 0.5f * gridResolution * tileSize + -0.5f * tileSize);
+        Vector3 tileOrigin = new Vector3(-0.5f * gridResolution * tileSize + 0.5f * tileSize, 0.5f * gridResolution * tileSize + -0.5f * tileSize, 0);
         Vector3 tileScale = new Vector3(tileSize, tileSize, 1);
 
         for (int x = 0; x < gridResolution; x++) {
