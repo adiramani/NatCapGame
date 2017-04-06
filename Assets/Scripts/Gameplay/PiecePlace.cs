@@ -68,6 +68,17 @@ public class PiecePlace : MonoBehaviour {
         return getPiece(x, y) != null;
     }
 
+    public void removePiece(int x, int y) {
+        GamePieceScript piece = getPiece(x, y);
+        if(piece != null) {
+            piecesRemaining[piece.pieceType] += 1;
+            pieces.Remove(piece);
+            updateRemainder(piece.pieceType, piecesRemaining[piece.pieceType]);
+            Object.Destroy(piece.gameObject);
+            calculator.recalculate();
+        }
+    }
+
     public GamePieceScript getPiece(int x, int y) {
         foreach(GamePieceScript piece in pieces) {
             if((piece.x == x || piece.x + 1 == x) && (piece.y == y || piece.y + 1 == y)) {
