@@ -81,5 +81,20 @@ public class MapModeCanvas : MonoBehaviour {
 
     public void registerButton(MapModeBtn mapModeBtn) {
         mapModeBtns.Add(mapModeBtn);
+
+        if(mapModeBtns.Count == 4) {
+            setRound(1);
+        }
+    }
+
+    public void setRound(int round) {
+        foreach (MapModeBtn mapModeBtn in mapModeBtns) {
+            if (mapModeBtn.mapMode == MapMode.FoodSecurity || mapModeBtn.mapMode == MapMode.TourismPotential) {
+                mapModeBtn.gameObject.SetActive(round == 2 ? true : false);
+            }
+            else {
+                mapModeBtn.gameObject.SetActive(true);
+            }
+        }
     }
 }
