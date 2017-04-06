@@ -12,9 +12,16 @@ public class GamePieceScript : MonoBehaviour {
     PiecePlace piecePlace;
     public PiecePlace.PieceType pieceType;
 
+    float doubleTapCooldown = 0; // seconds
+
     void Start() {
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         piecePlace = GameObject.Find("LevelManager").GetComponent<PiecePlace>();
+    }
+
+    void Update() {
+        if(doubleTapCooldown > 0)
+            doubleTapCooldown -= Time.deltaTime;
     }
 
     public void setup(int x, int y) {
@@ -54,6 +61,14 @@ public class GamePieceScript : MonoBehaviour {
     private Vector3 offset;
 
     void OnMouseDown() {
+        if(doubleTapCooldown > 0) {
+            piecePlace.removePiece(x, y);
+            return;
+        }
+        else {
+            doubleTapCooldown = 0.7f;
+        }
+
         cameraController.frozen = true;
 
         // set invalid coordinates while moving so it can snap onto its previous position

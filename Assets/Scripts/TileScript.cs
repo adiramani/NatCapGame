@@ -17,7 +17,6 @@ public class TileScript : MonoBehaviour {
     PiecePlace piecePlace;
 
     bool hoveringOverTile = false;
-    float doubleTapCooldown = 0; // seconds
     
     void Start() {
         // set all scores to zero initially
@@ -31,11 +30,6 @@ public class TileScript : MonoBehaviour {
 
         calculateAllColors();
         changeColor(colorCache[mapModeCanvas.currentMode]);
-    }
-
-    private void Update() {
-        if(doubleTapCooldown > 0)
-            doubleTapCooldown -= Time.deltaTime;
     }
 
     public void setup(int x, int y) {
@@ -89,15 +83,7 @@ public class TileScript : MonoBehaviour {
             changeColor(newColor);
         }
         if(!levelEditor.editing && !CameraController.IsPointerOverUIObject() && Input.touchCount < 2) {
-            // if tapping for first time:
-            if(doubleTapCooldown <= 0) {
-                hoveringOverTile = true;
-                doubleTapCooldown = 0.8f;
-            }
-            // if double-tapping:
-            else {
-                piecePlace.removePiece(coordinate[0], coordinate[1]);
-            }
+            hoveringOverTile = true;
         }
     }
 
@@ -110,10 +96,6 @@ public class TileScript : MonoBehaviour {
 
     void OnMouseUp() {
         if(hoveringOverTile) {
-            if(piecePlace.piecesRemaining[piecePlace.currentPieceType] > 0 && piecePlace.canPlace(coordinate[0], coordinate[1])) {
-                doubleTapCooldown = 0; // cancel double tap if you're placing object
-            }
-
             piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
             hoveringOverTile = false;
         }
