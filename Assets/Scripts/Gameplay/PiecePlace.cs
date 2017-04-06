@@ -5,11 +5,17 @@ using UnityEngine;
 public class PiecePlace : MonoBehaviour {
 
     LevelManager levelManager;
-    public Dictionary<PieceType, int> piecesRemaining = new Dictionary<PieceType, int>();
-    List<GamePieceScript> pieces = new List<GamePieceScript>();
+    public Dictionary<PieceType, int> piecesRemaining = new Dictionary<PieceType, int>(); // counter of how many pieces can be placed
+    List<GamePieceScript> pieces = new List<GamePieceScript>(); // pieces that have been placed
     GameObject map;
+    public PieceType currentPieceType = PieceType.Port;
+
+    // prefabs:
     public GameObject MineGameObject;
     public GameObject PortGameObject;
+
+    // ui stuff:
+    List<PieceButton> pieceButtons = new List<PieceButton>();
 
     public enum PieceType {
         Port = 0,
@@ -27,11 +33,12 @@ public class PiecePlace : MonoBehaviour {
         map = GameObject.Find("Map");
     }
 
-    public void placePiece(PieceType pieceType, int x, int y) {
+    public void place(PieceType pieceType, int x, int y) {
         if(piecesRemaining[pieceType] == 0 || !canPlace(x, y))
             return;
 
         piecesRemaining[pieceType] -= 1;
+        updateRemainder(pieceType, piecesRemaining[pieceType]);
 
         GameObject gameObject;
         if(pieceType == PieceType.Mine) gameObject = Instantiate(MineGameObject);
@@ -65,5 +72,30 @@ public class PiecePlace : MonoBehaviour {
         }
 
         return null;
+    }
+
+    public void updateRemainder(PieceType pieceType, int remainder) {
+        foreach (PieceButton pieceButton in pieceButtons) {
+            if (pieceButton.pieceType == pieceType) {
+                pieceButton.updateRemainder(remainder);
+            }
+        }
+    }
+
+    public void setPiece(PieceType pieceType) {
+        currentPieceType = pieceType;
+
+        foreach(PieceButton pieceButton in pieceButtons) {
+            if (pieceButton.pieceType == pieceType) {
+                pieceButton.select();
+            }
+            else {
+                pieceButton.deselect();
+            }
+        }
+    }
+
+    public void registerButton(PieceButton pieceButton) {
+        pieceButtons.Add(pieceButton);
     }
 }

@@ -82,7 +82,7 @@ public class TileScript : MonoBehaviour {
             changeColor(newColor);
         }
         else {
-            piecePlace.placePiece(PiecePlace.PieceType.Mine, coordinate[0], coordinate[1]);
+            piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
         }
     }
 }
