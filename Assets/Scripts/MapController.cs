@@ -5,18 +5,27 @@ using UnityEngine;
 public class MapController : MonoBehaviour {
 
     public int mapSize = 30;
-    
+
+    CameraController cameraController;
+
     private bool dragging = false;
     private Vector3 screenPoint;
     private Vector3 offset;
 
     void Start () {
+        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+
         Bounds bounds = gameObject.GetComponent<SpriteRenderer>().sprite.bounds;
         float spriteSize = bounds.size.x;
         gameObject.transform.localScale = new Vector3(mapSize / spriteSize, mapSize / spriteSize, 1);
     }
 	
 	void Update () {
+        if(cameraController.frozen) {
+            dragging = false;
+            return;
+        }
+
         // mouse down: start drag
         if(Input.GetMouseButtonDown(1)) {
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
