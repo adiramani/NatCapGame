@@ -8,38 +8,37 @@ public class ValueBtn : MonoBehaviour {
     public int value = 0;
     LevelEditor levelEditor;
     Button button;
-    ColorBlock colorBlock;
+    ColorBlock defaultColorBlock;
+    ColorBlock selectedColorBlock;
 
 	// Use this for initialization
 	void Start() {
         levelEditor = GameObject.Find("EditorCanvas").GetComponent<LevelEditor>();
-        levelEditor.registerButton(this);
         button = gameObject.GetComponent<Button>();
-        colorBlock = button.colors;
+
+        defaultColorBlock = button.colors;
+        selectedColorBlock = button.colors;
+        selectedColorBlock.normalColor = new Color(0.97f, 0.61f, 0.133f);
+        selectedColorBlock.highlightedColor = new Color(0.97f, 0.61f, 0.133f);
+        selectedColorBlock.pressedColor = new Color(0.97f, 0.61f, 0.133f);
+
         button.onClick.AddListener(OnClick);
-	}
-	
-	// Update is called once per frame
-	void Update() {
-		
-	}
+        levelEditor.registerButton(this);
+
+        if (value == 0) {
+            select();
+        }
+    }
 
     void OnClick() {
         levelEditor.setBtnValue(value);
-        select();
     }
 
     public void select() {
-        /*
-        colorBlock.normalColor = new Color(0, 255, 246);
-        button.colors = colorBlock;
-        */
+        button.colors = selectedColorBlock;
     }
 
     public void deselect() {
-        /*
-        colorBlock.normalColor = Color.white;
-        button.colors = colorBlock;
-        */
+        button.colors = defaultColorBlock;
     }
 }
