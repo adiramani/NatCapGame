@@ -35,7 +35,7 @@ public class MapController : MonoBehaviour {
         
         // mouse up, tap end, or more than 1 tap: stop drag
         // need to end when more than 1 finger, otherwise camera jumps a lot between fingers!
-        if(Input.GetMouseButtonUp(1) || Input.GetTouch(0).phase == TouchPhase.Ended || Input.touchCount > 1) {
+        if(Input.GetMouseButtonUp(1) || (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended) || Input.touchCount > 1) {
             dragging = false;
         }
 
