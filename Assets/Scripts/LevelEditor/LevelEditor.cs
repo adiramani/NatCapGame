@@ -13,7 +13,7 @@ public class LevelEditor : MonoBehaviour {
     public int currentValue = 0;
     
     void Start() {
-
+        gameObject.GetComponent<Canvas>().enabled = editing;
     }
 
     public void setBtnValue(int newValue) {
