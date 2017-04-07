@@ -15,6 +15,10 @@ public class GamePieceScript : MonoBehaviour {
 
     float doubleTapCooldown = 0; // seconds
 
+    // dragging:
+    private Vector3 screenPoint;
+    private Vector3 offset;
+
     void Start() {
         map = GameObject.Find("Map").gameObject;
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
@@ -58,9 +62,6 @@ public class GamePieceScript : MonoBehaviour {
 
         return score;
     }
-
-    private Vector3 screenPoint;
-    private Vector3 offset;
 
     void OnMouseDown() {
         if(doubleTapCooldown > 0) {

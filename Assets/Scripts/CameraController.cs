@@ -37,20 +37,7 @@ public class CameraController : MonoBehaviour {
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - zoom, minZoom, maxZoom);
             currentZoom = camera.orthographicSize;
         }
-
-        // Hold right-mouse to move view
-        if(Input.GetMouseButton(1)) {
-            float horizontalMovement = Input.GetAxis("Mouse X") * mouseMoveSensitivity * zoomRatio * currentZoom;
-            float verticalMovement = Input.GetAxis("Mouse Y") * mouseMoveSensitivity * zoomRatio * currentZoom;
-            if(horizontalMovement != 0 && verticalMovement != 0) {
-                camera.transform.position = new Vector3(
-                    Mathf.Clamp(camera.transform.position.x - horizontalMovement, -1 * maxMove, 1 * maxMove),
-                    Mathf.Clamp(camera.transform.position.y - verticalMovement, -1 * maxMove, 1 * maxMove),
-                    camera.transform.position.z
-                );
-            }
-        }
-
+        /*
         // Touchscreen camera movement
         if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             float horizontalMovement = Input.GetTouch(0).deltaPosition.x * fingerMoveSensitivity * zoomRatio * currentZoom;
@@ -59,13 +46,13 @@ public class CameraController : MonoBehaviour {
              * iPad has issue where when a second finger is placed down for zoom, it isn't recognized as a "second finger" right away.
              * So when users start to zoom, they get teleported!
              * Limit movement per frame to 2 units in any direction. This still allows for fast camera scrolling but still cancels the extremes.
-             */
+             *
             if (horizontalMovement != 0 && horizontalMovement < 2.0f && horizontalMovement > -2.0f &&
                 verticalMovement != 0 && verticalMovement < 2.0f && verticalMovement > -2.0f) {
                 camera.transform.Translate(-1 * horizontalMovement, -1 * verticalMovement, 0);
             }
         }
-
+    */
 
         // Pinch to zoom, from http://answers.unity3d.com/questions/63909/pinch-zoom-camera.html
         if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved) {
