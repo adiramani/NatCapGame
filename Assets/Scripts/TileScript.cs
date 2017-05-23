@@ -60,7 +60,7 @@ public class TileScript : MonoBehaviour {
             return new Color(0, 0, 0, 0);
         }
         Color color = mapModeCanvas.gridColorSchemes[mapMode][(score / 10) - 1];
-        return new Color(color.r, color.g, color.b, 0.85f);
+        return new Color(color.r, color.g, color.b, 0.6f);
     }
 
     public void changeColor(Color newColor) {
