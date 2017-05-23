@@ -15,9 +15,11 @@ public class MapModeCanvas : MonoBehaviour {
     List<MapModeBtn> mapModeBtns = new List<MapModeBtn>();
     public MapMode currentMode = MapModeCanvas.MapMode.PortExpansion;
     LevelManager levelManager;
+    KeyCanvas keyCanvas;
     
     void Start() {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        keyCanvas = GameObject.Find("KeyCanvas").GetComponent<KeyCanvas>();
 
         gridColorSchemes = new Dictionary<MapModeCanvas.MapMode, Color[]>() {
             { MapMode.PortExpansion,
@@ -68,7 +70,9 @@ public class MapModeCanvas : MonoBehaviour {
                 tile.changeColor(tile.colorCache[currentMode]);
             }
         }
-        
+
+        keyCanvas.setMapMode(newMode);
+
         foreach (MapModeBtn mapModeBtn in mapModeBtns) {
             if(mapModeBtn.mapMode == newMode) {
                 mapModeBtn.select();
