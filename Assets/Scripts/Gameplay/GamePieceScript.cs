@@ -34,12 +34,26 @@ public class GamePieceScript : MonoBehaviour {
         this.x = x;
         this.y = y;
     }
-
+    
     public int getScore() {
-        return getScore(true);
+        return getScore(0);
     }
 
-    public int getScore(bool includeNegatives) {
+    public int getPositiveScore() {
+        return getScore(1);
+    }
+
+    public int getNegativeScore() {
+        return getScore(2);
+    }
+
+    public int getScore(int mode) {
+        /*
+         * Modes:
+         * 0 = net value of tile
+         * 1 = sum of positive values
+         * 2 = sum of negative values
+         */
         if (levelManager == null)
             levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
@@ -52,9 +66,11 @@ public class GamePieceScript : MonoBehaviour {
         int score = 0;
 
         foreach (TileScript tile in tiles) {
-            score += tile.getScore(pieceType == PiecePlace.PieceType.Port ? MapModeCanvas.MapMode.PortExpansion : MapModeCanvas.MapMode.MineralExtraction);
+            if(mode == 0 || mode == 1) {
+                score += tile.getScore(pieceType == PiecePlace.PieceType.Port ? MapModeCanvas.MapMode.PortExpansion : MapModeCanvas.MapMode.MineralExtraction);
+            }
 
-            if (includeNegatives) {
+            if (mode == 2) {
                 score -= tile.getScore(MapModeCanvas.MapMode.FoodSecurity);
                 score -= tile.getScore(MapModeCanvas.MapMode.TourismPotential);
             }
