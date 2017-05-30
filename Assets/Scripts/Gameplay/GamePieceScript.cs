@@ -9,7 +9,8 @@ public class GamePieceScript : MonoBehaviour {
 
     GameObject map;
     CameraController cameraController;
-    LevelManager levelManager = null;
+    RoundController roundController;
+    LevelManager levelManager;
     PiecePlace piecePlace;
     public PiecePlace.PieceType pieceType;
 
@@ -22,7 +23,9 @@ public class GamePieceScript : MonoBehaviour {
     void Start() {
         map = GameObject.Find("Map").gameObject;
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        roundController = GameObject.Find("CalculatorCanvas").GetComponent<RoundController>();
         piecePlace = GameObject.Find("LevelManager").GetComponent<PiecePlace>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     void Update() {
@@ -137,6 +140,6 @@ public class GamePieceScript : MonoBehaviour {
         y = newY;
 
         gameObject.transform.position = tileOrigin + new Vector3(x * tileSize, -1 * y * tileSize, -1.5f);
-        piecePlace.calculator.recalculate();
+        roundController.tileEdited();
     }
 }

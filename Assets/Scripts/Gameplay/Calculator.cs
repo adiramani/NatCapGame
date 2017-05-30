@@ -31,7 +31,6 @@ public class Calculator : MonoBehaviour {
     public void recalculate() {
         // Round 1: start at 0 and add. Round 2: start at max and subtract.
         score = roundController.currentRound == 2 ? maximumScore : 0;
-        Debug.Log(score);
 
         foreach(GamePieceScript piece in piecePlace.pieces) {
             // Round 1: only positive values. Round 2: only negative debuffs
