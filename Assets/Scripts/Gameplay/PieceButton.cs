@@ -12,8 +12,8 @@ public class PieceButton : MonoBehaviour {
     Button button;
     Image image;
     Text remainderText;
-    ColorBlock defaultColorBlock;
-    ColorBlock selectedColorBlock;
+    Color defaultColor;
+    Color highlightColor = new Color(0, 1f, 0.96f);
 
     void Start() {
         piecePlace = GameObject.Find("LevelManager").GetComponent<PiecePlace>();
@@ -21,22 +21,18 @@ public class PieceButton : MonoBehaviour {
         image = gameObject.transform.FindChild("Image").GetComponent<Image>();
         remainderText = gameObject.transform.FindChild("Remainder").GetComponent<Text>();
 
-        defaultColorBlock = button.colors;
-        selectedColorBlock = button.colors;
-        selectedColorBlock.normalColor = new Color(0, 1f, 0.96f);
-        selectedColorBlock.highlightedColor = new Color(0, 1f, 0.96f);
-        selectedColorBlock.pressedColor = new Color(0, 1f, 0.96f);
+        ColorBlock colorBlock = button.colors;
+        colorBlock.normalColor = highlightColor;
+        button.colors = colorBlock;
 
-        button.onClick.AddListener(OnClick);
-        piecePlace.registerButton(this);
+        defaultColor = colorBlock.disabledColor;
 
         if(pieceType == PiecePlace.PieceType.Port) {
             select();
         }
-    }
-
-    void OnClick() {
-        piecePlace.setPiece(pieceType);
+        else {
+            deselect();
+        }
     }
 
     public void updateRemainder(int remainder) {
@@ -44,12 +40,13 @@ public class PieceButton : MonoBehaviour {
     }
 
     public void select() {
-        button.colors = selectedColorBlock;
-        image.color = selectedColorBlock.normalColor;
+        button.interactable = true;
+        piecePlace.setPiece(pieceType);
+        image.color = highlightColor;
     }
 
     public void deselect() {
-        button.colors = defaultColorBlock;
-        image.color = defaultColorBlock.normalColor;
+        button.interactable = false;
+        image.color = defaultColor;
     }
 }

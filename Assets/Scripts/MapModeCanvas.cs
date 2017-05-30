@@ -13,6 +13,7 @@ public class MapModeCanvas : MonoBehaviour {
 
     public Dictionary<MapModeCanvas.MapMode, Color[]> gridColorSchemes;
     List<MapModeBtn> mapModeBtns = new List<MapModeBtn>();
+    PieceButton[] pieceBtns;
     public MapMode currentMode = MapModeCanvas.MapMode.PortExpansion;
     LevelManager levelManager;
     KeyCanvas keyCanvas;
@@ -20,6 +21,7 @@ public class MapModeCanvas : MonoBehaviour {
     void Start() {
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         keyCanvas = GameObject.Find("KeyCanvas").GetComponent<KeyCanvas>();
+        pieceBtns = GameObject.Find("TileCanvas").gameObject.GetComponentsInChildren<PieceButton>();
 
         gridColorSchemes = new Dictionary<MapModeCanvas.MapMode, Color[]>() {
             { MapMode.PortExpansion,
@@ -73,12 +75,23 @@ public class MapModeCanvas : MonoBehaviour {
 
         keyCanvas.setMapMode(newMode);
 
-        foreach (MapModeBtn mapModeBtn in mapModeBtns) {
+        foreach(MapModeBtn mapModeBtn in mapModeBtns) {
             if(mapModeBtn.mapMode == newMode) {
                 mapModeBtn.select();
             }
             else {
                 mapModeBtn.deselect();
+            }
+        }
+
+        foreach(PieceButton pieceButton in pieceBtns) {
+            // if piece type matches mapmode
+            if(pieceButton.pieceType == PiecePlace.PieceType.Port && newMode == MapMode.PortExpansion ||
+                pieceButton.pieceType == PiecePlace.PieceType.Mine && newMode == MapMode.MineralExtraction) {
+                pieceButton.select();
+            }
+            else {
+                pieceButton.deselect();
             }
         }
     }

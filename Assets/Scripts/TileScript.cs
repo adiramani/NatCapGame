@@ -95,7 +95,7 @@ public class TileScript : MonoBehaviour {
     }
 
     void OnMouseUp() {
-        if(hoveringOverTile) {
+        if(hoveringOverTile && mapModeCanvas.currentMode == MapModeCanvas.MapMode.PortExpansion || mapModeCanvas.currentMode == MapModeCanvas.MapMode.MineralExtraction) {
             piecePlace.place(piecePlace.currentPieceType, coordinate[0], coordinate[1]);
             hoveringOverTile = false;
         }

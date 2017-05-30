@@ -100,18 +100,5 @@ public class PiecePlace : MonoBehaviour {
 
     public void setPiece(PieceType pieceType) {
         currentPieceType = pieceType;
-
-        foreach(PieceButton pieceButton in pieceButtons) {
-            if (pieceButton.pieceType == pieceType) {
-                pieceButton.select();
-            }
-            else {
-                pieceButton.deselect();
-            }
-        }
-    }
-
-    public void registerButton(PieceButton pieceButton) {
-        pieceButtons.Add(pieceButton);
     }
 }
