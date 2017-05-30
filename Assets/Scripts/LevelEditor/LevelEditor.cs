@@ -9,12 +9,11 @@ public class LevelEditor : MonoBehaviour {
     // This script manages ValueBtns, which are the buttons to switch between painting scores 0-50
 
     public bool editing = true;
-    public ValueBtn defaultButton; // configurable
     List<ValueBtn> valueBtns = new List<ValueBtn>();
     public int currentValue = 0;
     
     void Start() {
-        defaultButton.select();
+        gameObject.GetComponent<Canvas>().enabled = editing;
     }
 
     public void setBtnValue(int newValue) {
@@ -22,6 +21,15 @@ public class LevelEditor : MonoBehaviour {
 
         foreach (ValueBtn valueBtn in valueBtns) {
             valueBtn.deselect();
+        }
+
+        foreach (ValueBtn valueBtn in valueBtns) {
+            if (valueBtn.value == newValue) {
+                valueBtn.select();
+            }
+            else {
+                valueBtn.deselect();
+            }
         }
     }
 

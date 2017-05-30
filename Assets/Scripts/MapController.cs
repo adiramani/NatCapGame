@@ -6,14 +6,16 @@ public class MapController : MonoBehaviour {
 
     public int mapSize = 30;
 
-	// Use this for initialization
-	void Start () {
+    CameraController cameraController;
+
+    void Start () {
+        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+
         Bounds bounds = gameObject.GetComponent<SpriteRenderer>().sprite.bounds;
         float spriteSize = bounds.size.x;
         gameObject.transform.localScale = new Vector3(mapSize / spriteSize, mapSize / spriteSize, 1);
     }
 	
-	// Update is called once per frame
 	void Update () {
 
     }

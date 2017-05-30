@@ -1,40 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour {
 
-    public float zoomSensitivity = 5.0f;
-    public float moveSensitivity = 0.8f;
-    public float zoomRatio = 1.7f / 30f;
-
-    public float minZoom = 1.0f;
-    public float maxZoom = 20.0f;
-
-    float currentZoom;
+    public bool frozen = false; // frozen if dragging game piece
+    public float zoom = 15.2f;
 
     Camera camera;
-    
-	void Start () {
-        camera = gameObject.GetComponent<Camera>();
-        currentZoom = camera.orthographicSize;
-	}
-	
-	void Update () {
-        // Scroll wheel for zooming in/out
-        float zoom = Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
-        if (zoom != 0 && camera.orthographicSize - zoom > minZoom && camera.orthographicSize - zoom < maxZoom) {
-            camera.orthographicSize -= zoom;
-            currentZoom = camera.orthographicSize;
-        }
 
-        // Hold right-mouse to move view
-        if (Input.GetMouseButton(1)) {
-            float horizontalMovement = Input.GetAxis("Mouse X") * moveSensitivity * zoomRatio * currentZoom;
-            float verticalMovement = Input.GetAxis("Mouse Y") * moveSensitivity * zoomRatio * currentZoom;
-            if(horizontalMovement != 0 && verticalMovement != 0) {
-                camera.transform.Translate(-1 * horizontalMovement, -1 * verticalMovement, 0);
-            }
-        }
+    void Start () {
+        camera = gameObject.GetComponent<Camera>();
+        camera.orthographicSize = zoom;
+	}
+
+    private void Update() {
+        camera.orthographicSize = zoom;
+    }
+
+    public static bool IsPointerOverUIObject() {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 1; // will always be at least 1 because of the grid ui
     }
 }
