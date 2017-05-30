@@ -17,7 +17,7 @@ The game is designed to be played collaboratively on a tablet. There should be a
 
 In Round 1, only positive score factors are considered: value gained from port expansion and mine placement.
 
-In Round 2, both positive and negative score factors are considered. Building on areas with tourism potential and food security hurts your score!
+In Round 2, the negative score factors (value lost from harming food security and tourism potential) are subtracted from the sum of positive score factors.
 
 ### Controls - mouse
 
@@ -39,6 +39,7 @@ In Round 2, both positive and negative score factors are considered. Building on
 ### Environment Scripts:
 
 - **CameraController.cs:** manages zooming camera. Sets maximum and minimum zoom, as well as zoom sensitivity.
+- **KeyCanvas.cs:** updates colors in key sidebar
 - **LevelManager.cs:** establishes level details including gridResolution (30), maxTileScore (50), and opacity of tiles. References TileScript.
 - **MapController.cs:** scales the map sprite to the appropriate size and aspect ratio (1:1 for a 30x30 grid) for the game environment. Also in charge of "moving" the camera - when dragging, the map is moved.
 - **MapLoader.cs:** contains a string with 3600 values for point values associated with tiles on different maps. Four values exist for each tile and are seperated by commas (ports, minerals, food, and tourism in order). Each line is a new row, and each tile within a row is seperated with a semicolon. String is parsed to populate map values in LevelManager.cs. Also references MapModeCanvas (where structure of string is enumerated).
